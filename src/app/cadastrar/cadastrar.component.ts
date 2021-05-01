@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { User } from '../model/User';
+import { UserLogin } from '../model/UserLogin';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-cadastrar',
@@ -7,9 +11,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CadastrarComponent implements OnInit {
 
-  constructor() { }
+  user: User = new User
+  confirmarSenha: string
+  tipoUsuario: string
 
-  ngOnInit(): void {
+  constructor(
+    private authService: AuthService,
+    private router: Router
+    ) { }
+
+  ngOnInit() {
+    window.scroll(0,0) //sempre que iniciar a tela ficara no top do scroll, ou seja no eixo 0 de y e z
+  }
+
+  confirmSenha(event: any) {
+    this.confirmarSenha = event.target.value
+  }
+
+  tipoUser(event: any){
+    this.tipoUsuario = event.target.value
+  }
+
+  cadastrar(){
+    this.user.tipo = this.tipoUsuario
+    
+    if (this.user.senha != this.confirmarSenha) {
+      alert('senhas incorretas')
+      } else {
+      this.authService.cadastrar(this.user).subscribe((resp: User) => {
+        this.user = resp
+        this.router.navigate(['/entrar'])
+        alert('Usuario cadastrado com sucesso!')
+      })
+    }
+
   }
 
 }
