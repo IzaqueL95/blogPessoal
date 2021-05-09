@@ -9,11 +9,15 @@ import { AuthService } from '../service/auth.service';
   templateUrl: './cadastrar.component.html',
   styleUrls: ['./cadastrar.component.css']
 })
+
+
 export class CadastrarComponent implements OnInit {
 
   user: User = new User
   confirmarSenha: string
   tipoUsuario: string
+  
+  
 
   constructor(
     private authService: AuthService,
@@ -46,5 +50,7 @@ export class CadastrarComponent implements OnInit {
     }
 
   }
+  
+  
 
 }
