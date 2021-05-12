@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { Postagem } from 'src/app/model/Postagem';
 import { Tema } from 'src/app/model/Tema';
+import { AlertasService } from 'src/app/service/alertas.service';
 import { PostagemService } from 'src/app/service/postagem.service';
 import { TemaService } from 'src/app/service/tema.service';
 import { environment } from 'src/environments/environment.prod';
@@ -23,7 +26,8 @@ export class PostagemEditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private postagemService: PostagemService,
-    private temaService: TemaService
+    private temaService: TemaService,
+    private alertas: AlertasService
   ) { }
 
   ngOnInit() {
@@ -32,7 +36,8 @@ export class PostagemEditComponent implements OnInit {
 
 
     if (environment.token == '') {
-      /*alert('Sua sessão foi encerrada, faça login novamente.')*/
+      this.alertas.showAlertDanger('Sua sessão foi encerrada, faça login novamente.')
+      
       this.router.navigate(['/entrar'])
     }
 
@@ -65,7 +70,7 @@ export class PostagemEditComponent implements OnInit {
 
     this.postagemService.putPostagem(this.postagem).subscribe((resp: Postagem) => {
       this.postagem = resp
-      alert('Postagem alterada com sucesso!')
+      this.alertas.showAlertSuccess('Postagem alterada com sucesso!')
       this.router.navigate(['/inicio'])
     })
     
