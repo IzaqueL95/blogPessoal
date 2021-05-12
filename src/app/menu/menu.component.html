@@ -12,12 +12,14 @@
           <p class="m-0 font-weight-bold text-white fs-16">Olá {{nome}}</p>
         </li>
 
-        <li class="nav-item pl-3"> 
+        <li *ngIf='auth.adm()'  class="nav-item pl-3"> 
             <a [routerLink]="['/user-edit', id]">
              <p class="text-white fs-16 m-0"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></p>
             </a>
             
+            
           </li>
+          <i *ngIf='auth.adm()' class="fa fa-check-circle ml-3" aria-hidden="true"></i>
      </ul>
 
      <ul class="navbar-nav ml-auto d-flex align-items-center">
